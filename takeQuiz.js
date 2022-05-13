@@ -47,7 +47,7 @@ function getRandomizedSkin(champList) {
 			`http://ddragon.leagueoflegends.com/cdn/12.9.1/data/en_US/champion/${champ.id}.json`
 		)
 			.then((res) => res.json())
-			.then((data) => console.log(data.data[champ.id].skins));
+			.then((data) => data.data[champ.id].skins);
 		// let randSkinIds = generateRandomNumbers();
 	});
 }
