@@ -8,14 +8,6 @@ let champId = null;
 let champSkinUrlList = [];
 
 searchForm.addEventListener("submit", () => search());
-// searchButton.addEventListener("keypress", checkIfEnter);
-
-// function checkIfEnter(e) {
-// 	e.preventDefault();
-// 	if (e.keyCode === 13) {
-// 		search();
-// 	}
-// }
 
 searchBox.addEventListener("input", (e) => {
 	searchText = e.target.value;
@@ -34,17 +26,6 @@ async function search() {
 			champId = allData.data[sanitizedChampName].key;
 			populateChampContent(allData.data[sanitizedChampName]);
 		});
-	// fetch(
-	// "http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Aatrox_0.jpg?api_key=RGAPI-7aef0bc6-2d7a-40ac-8fd6-c077309e36dc",
-	// {
-	// 	method: "GET",
-	// 	accept: "image/jpg",
-	// 	// mode: "cors",
-	// 	// "X-Riot-Token": "RGAPI-7aef0bc6-2d7a-40ac-8fd6-c077309e36dc",
-	// }
-	// )
-	// .then((res) => res.json())
-	// .then((data) => console.log(data));
 }
 
 function populateChampContent(champData) {
@@ -58,14 +39,12 @@ function populateChampContent(champData) {
 	getChampSkinList(champData.id);
 }
 
-function populateSkinList(skinArray, champName = "", isQuiz = false) {
+function populateSkinList(skinArray, champName) {
 	let skinData = {};
 	skinArray.forEach((skin) => {
 		skinData[skin.num] = {};
 
-		let imageType = isQuiz ? "centered" : "splash";
-
-		let skinUrl = `http://ddragon.leagueoflegends.com/cdn/img/champion/${imageType}/${champName}_${skin.num}.jpg`;
+		let skinUrl = `http://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champName}_${skin.num}.jpg`;
 		skinData[skin.num]["url"] = skinUrl;
 		skinData[skin.num]["name"] = skin.name;
 		let skinContainer = document.createElement("div");
@@ -76,7 +55,7 @@ function populateSkinList(skinArray, champName = "", isQuiz = false) {
 		let splashImage = document.createElement("img");
 		splashImage.src = skinUrl;
 		skinContainer.append(splashImage);
-		isQuiz ? null : skinContainer.append(skinName);
+		skinContainer.append(skinName);
 		skinsContainer.append(skinContainer);
 	});
 }
@@ -97,6 +76,5 @@ function sanitizeSearchStr() {
 	let sanitizedText = allLowerSplitted
 		.map((str) => str.charAt(0).toUpperCase() + str.slice(1))
 		.join("");
-	console.log(sanitizedText);
 	return sanitizedText;
 }
